@@ -1,1 +1,18 @@
-/data
+# Ignorer les fichiers de données téléchargés
+data/*
+!data/
+data/experiments/*
+!data/experiments/
+data/raw/*
+!data/raw/
+
+# Ignorer l'environnement virtuel
+venv/
+
+# Ignorer les fichiers de cache Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorer les fichiers de configuration
+config.py
