@@ -26,13 +26,13 @@ class DataProcessing:
 
     def preprocess_events(self):
         events = pd.read_csv(self.raw_data["events"])
+        # suppresion des doublons
+        events.drop_duplicates(inplace=True)
+        # conversion de la colonne timestamp en datetime
         events["timestamp"] = pd.to_datetime(events["timestamp"], errors='coerce')
-        events.dropna(subset=["timestamp"], inplace=True)
         events["date"] = events["timestamp"].dt.date
-        events["year"] = events["timestamp"].dt.year
-        events["month"] = events["timestamp"].dt.month
-        events["day"] = events["timestamp"].dt.day
         events["hour"] = events["timestamp"].dt.hour
+        events["second"] = events["timestamp"].dt.second
         self.save_processed_data(events, "events")
         return events
 
@@ -40,10 +40,14 @@ class DataProcessing:
         item_prop_1 = pd.read_csv(self.raw_data["item_prop_1"])
         item_prop_2 = pd.read_csv(self.raw_data["item_prop_2"])
         item_properties = pd.concat([item_prop_1, item_prop_2], ignore_index=True)
+        # suppresion des doublons
+        item_properties.drop_duplicates(inplace=True)
         self.save_processed_data(item_properties, "item_properties")
         return item_properties
 
     def preprocess_category_tree(self):
         category_tree = pd.read_csv(self.raw_data["category_tree"])
+        # suppresion des doublons
+        category_tree.drop_duplicates(inplace=True)
         self.save_processed_data(category_tree, "category_tree")
         return category_tree
